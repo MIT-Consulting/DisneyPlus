@@ -1,0 +1,22 @@
+﻿<Application
+    x:Class="DisneyPlus.Uwp.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    RequiresPointerMode="WhenRequested">
+    <Application.Resources>
+        <Style TargetType="ListViewItem">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <ContentPresenter />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Assets/Fonts/Avenir-Roman.ttf#Avenir" />
+        </Style>
+    </Application.Resources>
+</Application>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace DisneyPlus.Data.Models
 {
@@ -7,6 +8,6 @@ namespace DisneyPlus.Data.Models
         public ContentCollection(string id, string title)
             : base(id, title)  {}
 
-        public List<ContentTile> Items { get; set; } = new List<ContentTile>();
+        public ObservableCollection<ContentTile> Items { get; set; } = new ObservableCollection<ContentTile>();
     }
 }

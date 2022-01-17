@@ -1,4 +1,5 @@
-﻿using DisneyPlus.Data.Models;
+﻿using DisneyPlus.Common;
+using DisneyPlus.Data.Models;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Net;
@@ -29,7 +30,8 @@ namespace DisneyPlus.Data.Repos
                 else
                 {
                     var refid = (string)set["refId"];
-                    collection.Items.AddRange(await GetSetItems(refid));
+                    collection = new ContentCollectionRef(collection, refid);
+                    //collection.Items.AddRange(await GetSetItems(refid));
                 }
                 collections.Add(collection);
             }

@@ -84,6 +84,11 @@
                         <Setter Property="IsTabStop" Value="False"/>
                     </Style>
                 </ListView.ItemContainerStyle>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="30 0 0 20">

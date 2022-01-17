@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Numerics;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Hosting;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 
 namespace DisneyPlus.Uwp
@@ -48,6 +50,39 @@ namespace DisneyPlus.Uwp
             Storyboard.SetTargetProperty(da, "Opacity");
             sb.Children.Add(da);
             sb.Begin();
+        }
+
+        public static T GetVisualChild<T>(this DependencyObject obj) where T : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+            {
+                var child = VisualTreeHelper.GetChild(obj, i);
+                if (child != null && child is T)
+                    return (T)child;
+                else
+                {
+                    var childOfChild = GetVisualChild<T>(child);
+                    if (childOfChild != null)
+                        return childOfChild;
+                }
+            }
+            return null;
+        }
+
+        public static List<T> GetVisualChildren<T>(this DependencyObject obj) where T : DependencyObject
+        {
+            var childList = new List<T>();
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+            {
+                var child = VisualTreeHelper.GetChild(obj, i);
+                if (child != null && child is T)
+                    childList.Add(child as T);
+            }
+
+            if (childList.Count > 0)
+                return childList;
+
+            return null;
         }
     }
 }

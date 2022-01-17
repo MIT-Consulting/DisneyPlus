@@ -19,18 +19,8 @@ namespace DisneyPlus.Uwp.ViewModels
             _appState = appState;
             _contentRepo = contentRepo;
             LoadDataCommand = new AsyncCommand(LoadData);
+            LoadCollectionCommand = new AsyncCommand<ContentCollectionRef>(LoadCollection);
         }
-        public IAsyncCommand LoadDataCommand { get; private set; }
-        public async Task LoadData()
-        {
-            IsBusy = true;
-
-            Headers = new ObservableCollection<ContentTileHeader>(await _contentRepo.GetHeaders());
-            Categories = new ObservableCollection<ContentTileVideo>(await _contentRepo.GetCategories());                        
-            Collections = new ObservableCollection<ContentCollection>(await _contentRepo.GetCollections());
-
-            IsBusy = false;
-        }        
         
         public ObservableCollection<ContentCollection> Collections
         {
@@ -63,6 +53,25 @@ namespace DisneyPlus.Uwp.ViewModels
             }
         }
         private ContentTileHeader _selectedHeader;
+
+        public AsyncCommand LoadDataCommand { get; private set; }
+        public async Task LoadData()
+        {
+            IsBusy = true;
+
+            Headers.AddRange(await _contentRepo.GetHeaders());
+            Categories.AddRange(await _contentRepo.GetCategories());
+            Collections.AddRange(await _contentRepo.GetCollections());
+
+            IsBusy = false;
+        }
+
+        public AsyncCommand<ContentCollectionRef> LoadCollectionCommand { get; private set; }
+        private async Task LoadCollection(ContentCollectionRef collection)
+        {
+            collection.IsLoaded = true;
+            collection.Items.AddRange(await _contentRepo.GetSetItems(collection.RefId));            
+        }
 
         private void TriggerHeaderAnimation() => 
             _appState.HeaderControls
